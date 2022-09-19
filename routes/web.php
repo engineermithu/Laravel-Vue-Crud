@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/crud',[HomeController::class, 'index']);
 Route::post('/student/store',[HomeController::class, 'store']);
 Route::get('/student/edit/{id}',[HomeController::class, 'edit']);
+Route::get('/student/getData',[HomeController::class, 'show']);
+Route::get('/delete/student/{id}',[HomeController::class, 'destroy']);
