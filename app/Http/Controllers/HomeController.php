@@ -28,8 +28,7 @@ class HomeController extends Controller
         $data->student_department = $request->student_department;
         $data->student_institute  = $request->student_institute;
         $data->save();
-
-
+        return response()->json($data);
     }
 
 
@@ -42,14 +41,36 @@ class HomeController extends Controller
 
     public function edit($id)
     {
-        echo "hello".$id;
-        //
+        $data   = Student::findOrFail($id);
+        return response()->json(['student'=> $data]);
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+
+        $Student = Student::find($id);
+        if(!$Student){
+            return response()->json(['error'=>"Student not found"]);
+        }
+
+        $data =Student::find($id)->update([
+            'student_name'=>$request->student_name,
+            'student_department'=>$request->student_department,
+            'student_institute'=>$request->student_institute
+        ]);
+
+
+
+
+
+//        $data                     = $this->get($request->$id);
+//        $data->student_name       = $request->student_name;
+//        $data->student_department = $request->student_department;
+//        $data->student_institute  = $request->student_institute;
+//        $data->save();
+
+        return response()->json($data);
     }
 
 
