@@ -22,4 +22,4 @@ Route::post('/student/store',[HomeController::class, 'store']);
 Route::get('/student/edit/{id}',[HomeController::class, 'edit']);
 Route::get('/student/getData',[HomeController::class, 'show']);
 Route::delete('/delete/student/{id}',[HomeController::class, 'destroy']);
-Route::patch('/student/update/{id}',[HomeController::class, 'update']);
+Route::post('/student/update/{id}',[HomeController::class, 'update']);

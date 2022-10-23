@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('student_name');
             $table->string('student_department');
             $table->string('student_institute');
+            $table->string('student_image')->nullable();
             $table->timestamps();
         });
     }

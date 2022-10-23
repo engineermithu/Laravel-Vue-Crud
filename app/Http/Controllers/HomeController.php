@@ -2,81 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\StudentRepositoryInterface;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use function Ramsey\Uuid\v1;
 
 class HomeController extends Controller
 {
+
+    protected $student;
+
+    public function __construct(StudentRepositoryInterface $student){
+         $this->student = $student;
+    }
+
 
     public function index()
     {
         return view('home.home');
     }
 
-
-    public function create()
-    {
-        //
-    }
-
-
     public function store(Request $request)
     {
-        $data                     = new Student();
-        $data->student_name       = $request->student_name;
-        $data->student_department = $request->student_department;
-        $data->student_institute  = $request->student_institute;
-        $data->save();
-        return response()->json($data);
+         $this->student->store($request);
     }
-
 
     public function show()
     {
-        $data = Student::all();
+       $data = $this->student->show();
         return response()->json($data);
     }
-
 
     public function edit($id)
     {
-        $data   = Student::findOrFail($id);
+        $data = $this->student->edit($id);
         return response()->json(['student'=> $data]);
     }
 
-
     public function update(Request $request, $id)
     {
-
-        $Student = Student::find($id);
-        if(!$Student){
-            return response()->json(['error'=>"Student not found"]);
-        }
-
-        $data =Student::find($id)->update([
-            'student_name'=>$request->student_name,
-            'student_department'=>$request->student_department,
-            'student_institute'=>$request->student_institute
-        ]);
-
-
-
-
-
-//        $data                     = $this->get($request->$id);
-//        $data->student_name       = $request->student_name;
-//        $data->student_department = $request->student_department;
-//        $data->student_institute  = $request->student_institute;
-//        $data->save();
-
-        return response()->json($data);
+        $this->student->update($request, $id);
     }
-
 
     public function destroy($id)
     {
-        $data = Student::findOrFail($id)->delete();
-        return response()->json($data);
+        $this->student->destroy($id);
     }
 }
